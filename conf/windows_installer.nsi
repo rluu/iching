@@ -74,7 +74,7 @@ Section "I Ching Application" SecMain
     File /r /x .svn "conf"
     File /r /x .svn "dist"
     File /r /x .svn "doc"
-    File /r /x .svn /x *.svg /x Makefile* "resources"
+    File /r /x .svn /x *.pdf /x 16x16 /x 22x22 /x scalable "resources"
 
     # Create log directory.
     CreateDirectory "$INSTDIR\logs"

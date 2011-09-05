@@ -88,14 +88,22 @@ operating systems:
 
     svn checkout http://iching.googlecode.com/svn/trunk/ iching-read-only
 
-5) Copy the NSIS script file from the conf directory to the top-level.
+5) Run cx_Freeze on main.py to generate the runnable .exe in the dist folder:
 
     [user@localhost ~]$ cd iching-read-only
+    [user@localhost iching-read-only] /c/Python31/Scripts/cxfreeze src/main.py
+
+6) Copy the Microsoft runtime libraries to the dist folder.
+
+    [user@localhost iching-read-only] cp -r tps/microsoft/Microsoft.VC90.CRT/ dist/
+
+7) Copy the NSIS script file from the conf directory to the top-level.
+
     [user@localhost iching-read-only]$ cp conf/windows_installer.nsi .
 
-6) Open the NSIS application and load the script 'windows_installer.nsi'.
+8) Run the NSIS.exe application and load the script 'windows_installer.nsi'.
 
-7) The resulting installer executable will be generated and located in
+9) The resulting installer executable will be generated and located in
    the top-level directory.
 
 
