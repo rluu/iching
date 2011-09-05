@@ -827,10 +827,11 @@ class MainWindow(QMainWindow):
         """Actually does the printing to the given printer."""
 
         if printer.isValid() == False:
+            title = "Error"
             errMsg = "Aborting print job.  " + \
                 "The current printer configuration is invalid."
 
-            QMessageBox.warning(errMsg)
+            QMessageBox.warning(self, title, errMsg)
             return
             
         # Print.

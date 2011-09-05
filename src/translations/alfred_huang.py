@@ -79,13 +79,16 @@ class AlfredHuangTranslation:
 
         directory = \
             os.path.abspath(pathname + \
-                "/../resources/texts/alfred_huang/")
+                            os.sep + ".." +
+                            os.sep + "resources" +
+                            os.sep + "texts" +
+                            os.sep + "alfred_huang")
 
         return directory
     
     def getUrl():
         f = AlfredHuangTranslation._getTranslationPath() + \
-           "/TheCompleteIChing.htm"
+           os.sep + "TheCompleteIChing.htm"
 
         url = QUrl.fromLocalFile(f)
 

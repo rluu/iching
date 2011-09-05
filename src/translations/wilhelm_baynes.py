@@ -78,14 +78,19 @@ class WilhelmBaynesTranslation:
         (pathname, scriptname) = os.path.split(sys.argv[0])
 
         directory = \
-            os.path.abspath(pathname + \
-                "/../resources/texts/wilhelm_baynes/www2.unipr.it/~deyoung/")
+            os.path.abspath(pathname +
+                            os.sep + ".." +
+                            os.sep + "resources" +
+                            os.sep + "texts" +
+                            os.sep + "wilhelm_baynes" +
+                            os.sep + "www2.unipr.it" +
+                            os.sep + "~deyoung")
 
         return directory
     
     def getUrl():
         f = WilhelmBaynesTranslation._getTranslationPath() + \
-            "/I_Ching_Wilhelm_Translation.html"
+            os.sep + "I_Ching_Wilhelm_Translation.html"
 
         url = QUrl.fromLocalFile(f)
 

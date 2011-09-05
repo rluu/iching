@@ -78,14 +78,19 @@ class JamesLeggeTranslation:
         (pathname, scriptname) = os.path.split(sys.argv[0])
 
         directory = \
-            os.path.abspath(pathname + \
-                "/../resources/texts/james_legge/sacred-texts.com/ich/")
-
+            os.path.abspath(pathname + 
+                            os.sep + ".." +
+                            os.sep + "resources" +
+                            os.sep + "texts" +
+                            os.sep + "james_legge" +
+                            os.sep + "sacred-texts.com" +
+                            os.sep + "ich")
+        
         return directory
     
     def getUrl():
         f = JamesLeggeTranslation._getTranslationPath() + \
-           "/index.htm"
+            os.sep + "index.htm"
 
         url = QUrl.fromLocalFile(f)
 
