@@ -1,0 +1,40 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+<qresource>
+    <file>images/iconspedia/office3_32.png</file>
+
+    <file>images/qt/pointer.png</file>
+    <file>images/qt/qt-logo.png</file>
+
+    <file>images/rluu/appIcon.png</file>
+    <file>images/rluu/book.png</file>
+    <file>images/rluu/gearGreen.png</file>
+    <file>images/rluu/handClosed.png</file>
+    <file>images/rluu/handOpen.png</file>
+    <file>images/rluu/iching.png</file>
+    <file>images/rluu/pointerPencil.png</file>
+    <file>images/rluu/logo_ryan_d1.png</file>
+    <file>images/rluu/triangleRuler.png</file>
+    <file>images/rluu/zoomIn.png</file>
+    <file>images/rluu/zoomInBlue.png</file>
+    <file>images/rluu/zoomOut.png</file>
+    <file>images/rluu/zoomOutBlue.png</file>
+
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/document-new.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/document-open.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/document-print.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/document-print-preview.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/document-save-as.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/document-save.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/system-log-out.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/go-next.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/actions/go-previous.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/apps/internet-web-browser.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/apps/help-browser.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/categories/applications-system.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/categories/preferences-system.png</file>
+    <file>images/tango-icon-theme-0.8.90/32x32/status/image-missing.png</file>
+
+</qresource>
+</RCC>
+
