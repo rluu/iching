@@ -58,10 +58,12 @@ def main():
     
     # Set up the logger.
 
-    # Parsing the log config file doesn't appear to work on Windows
-    # when using cx_freeze.  Only parse the log file if we're not on
-    # windows, or if the filename doesn't have a .exe extension.
-    if sys.platform != "win32" or sys.argv[0].split(".")[-1] != "exe":
+    # Parsing the log config file doesn't work on the current version
+    # of cx_Freeze (on Windows and on Mac).  The author of cx_Freeze
+    # knows about this bug and hopefully the next release of cx_Freeze
+    # addresses this issue.  Until then, only parse the config file if
+    # this file is referenced as a .py file.
+    if sys.argv[0].split(".")[-1] == "py":
         logging.config.fileConfig(LOG_CONFIG_FILE)
     log = logging.getLogger("main")
 
