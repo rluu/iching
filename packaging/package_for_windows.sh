@@ -81,7 +81,7 @@ MAKENSIS_SCRIPT="$TOPLEVEL_DIR/packaging/$OPERATING_SYSTEM/makensis.py"
 
 # Path to the icon to use in the application package.
 APP_MAIN_ICONNAME=appIcon.ico
-APP_MAIN_ICON="resources\\images\\rluu\\$APP_MAIN_ICONNAME"
+APP_MAIN_ICON="resources\\\\images\\\\rluu\\\\$APP_MAIN_ICONNAME"
 
 APP_INSTALL_PACKAGE_NAME="iching-installer-win32-${APP_VERSION}-${APP_BUILD_NUMBER}.exe"
 
