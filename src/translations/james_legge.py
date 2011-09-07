@@ -78,7 +78,7 @@ class JamesLeggeTranslation:
         # Return value.
         directory = ""
         
-        (pathname, scriptname) = os.path.split(sys.argv[0])
+        (pathname, scriptname) = os.path.split(os.path.abspath(sys.argv[0]))
 
         translationDir = \
             "resources" + \

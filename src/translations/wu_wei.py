@@ -1,8 +1,13 @@
 
+import os
+import sys
+
+from PyQt4.QtCore import *
+
 
 class WuWeiTranslation:
 
-        kuaNumberToKuaTranslation = \
+    kuaNumberToKuaTranslation = \
                {1 : "Creating",
                 2 : "Open - Receptive - Yielding - Willing To Follow",
                 3 : "Difficulty And Danger at the Beginning",
@@ -68,4 +73,52 @@ class WuWeiTranslation:
                 63 : "Completion, In Place - In Order",
                 64 : "In Order - Out of Place"}
 
+
+    def _getTranslationPath():
+
+        # Return value.
+        directory = ""
+        
+        (pathname, scriptname) = os.path.split(os.path.abspath(sys.argv[0]))
+
+        translationDir = \
+            "resources" + \
+            os.sep + "texts" + \
+            os.sep + "wu_wei"
+        
+        # If the script ends in .py then use the normal relative
+        # directory reference.
+        if scriptname.lower().endswith(".py"):
+            # Running it from source.
+            directory = \
+                os.path.abspath(pathname + \
+                                os.sep + ".." + \
+                                os.sep + translationDir)
+            
+        elif scriptname.lower().endswith(".exe"):
+            # Windows install.
+            directory = \
+                os.path.abspath(pathname + \
+                                os.sep + ".." + \
+                                os.sep + translationDir)
+            
+        else:
+            # Mac or Linux install.
+            directory = \
+                os.path.abspath(pathname + \
+                                os.sep + translationDir)
+
+        return directory
     
+    def getUrl():
+	# Unsupported at this time.
+
+        #f = WuWeiTranslation._getTranslationPath() + \
+        #    os.sep + "index.html"
+
+        f = ""
+	
+        url = QUrl.fromLocalFile(f)
+
+        return url
+

@@ -3,7 +3,9 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtNetwork import *
-from PyQt4.QtWebKit import *
+
+from PyQt4.QtWebKit import QWebPage
+from PyQt4.QtWebKit import QWebView
 
 
 

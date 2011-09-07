@@ -151,10 +151,7 @@ for d in $SUBDIRS; do
     # Remove any extra files that aren't needed.
     find $COPY_DEST_DIR/$d -name "*.log" | xargs rm -rf
     find $COPY_DEST_DIR/$d -name "*.pyc" | xargs rm -rf
-    find $COPY_DEST_DIR/$d -name "Makefile*" | xargs rm -rf
-    find $COPY_DEST_DIR/$d -name "16x16" | xargs rm -rf
-    find $COPY_DEST_DIR/$d -name "22x22" | xargs rm -rf
-    find $COPY_DEST_DIR/$d -name "scalable" | xargs rm -rf
+    find $COPY_DEST_DIR/$d -name "tango-icon-theme*" | xargs rm -rf
 
     # For now, remove pdfs, since they are big.  We may want to
     # include them in the future.

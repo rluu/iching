@@ -353,6 +353,39 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(self.mainWidget)
 
+        # Create webviews used to display the various translations.
+
+        # Wilhelm/Baynes Translation.
+        self.webViewWilhelmBaynesTranslation = WebView(self)
+        self.webViewWilhelmBaynesTranslation.hide()
+        self.webViewWilhelmBaynesTranslation.\
+            load(WilhelmBaynesTranslation.getUrl())
+        self.webViewWilhelmBaynesTranslation.\
+            setWindowTitle("Wilhelm/Baynes Translation")
+        #self.webViewWilhelmBaynesTranslation.show()
+        #self.webViewWilhelmBaynesTranslation.hide()
+
+        # Wu Wei Translation.
+        #self.webViewWuWeiTranslation = WebView(self)
+        #self.webViewWuWeiTranslation.hide()
+        #self.webViewWuWeiTranslation.\
+        #    load(WuWeiTranslation.getUrl())
+        #self.webViewWuWeiTranslation.\
+        #    setWindowTitle("Wu Wei Translation")
+        #self.webViewWuWeiTranslation.show()
+        #self.webViewWuWeiTranslation.hide()
+
+        # James Legge Translation.
+        self.webViewJamesLeggeTranslation = WebView(self)
+        self.webViewJamesLeggeTranslation.hide()
+        self.webViewJamesLeggeTranslation.\
+            load(JamesLeggeTranslation.getUrl())
+        self.webViewJamesLeggeTranslation.\
+            setWindowTitle("James Legge Translation")
+        #self.webViewJamesLeggeTranslation.show()
+        #self.webViewJamesLeggeTranslation.hide()
+
+        
         # Create actions.
         self._createActions()
 
@@ -880,10 +913,11 @@ class MainWindow(QMainWindow):
     def _wilhelmBaynesTranslation(self):
         """Displays the Wilhelm/Baynes translation of the I Ching."""
 
-        webview = WebView(self)
-        webview.load(WilhelmBaynesTranslation.getUrl())
-        webview.setWindowTitle("Wilhelm/Baynes Translation")
-        webview.show()
+        self.webViewWilhelmBaynesTranslation.show()
+        #webview = WebView(self)
+        #webview.load(WilhelmBaynesTranslation.getUrl())
+        #webview.setWindowTitle("Wilhelm/Baynes Translation")
+        #webview.show()
 
     def _wuWeiTranslation(self):
         """Displays the Wu Wei translation of the I Ching."""
@@ -899,10 +933,11 @@ class MainWindow(QMainWindow):
     def _jamesLeggeTranslation(self):
         """Displays the James Legge translation of the I Ching."""
 
-        webview = WebView(self)
-        webview.load(JamesLeggeTranslation.getUrl())
-        webview.setWindowTitle("James Legge Translation")
-        webview.show()
+        self.webViewJamesLeggeTranslation.show()
+        #webview = WebView(self)
+        #webview.load(JamesLeggeTranslation.getUrl())
+        #webview.setWindowTitle("James Legge Translation")
+        #webview.show()
 
     def _howToConsultIChing(self):
         """Opens up a dialog with information on how to consult the I Ching."""

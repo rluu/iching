@@ -79,7 +79,7 @@ class WilhelmBaynesTranslation:
         # Return value.
         directory = ""
         
-        (pathname, scriptname) = os.path.split(sys.argv[0])
+        (pathname, scriptname) = os.path.split(os.path.abspath(sys.argv[0]))
 
         translationDir = \
             "resources" + \
@@ -111,7 +111,7 @@ class WilhelmBaynesTranslation:
                                 os.sep + translationDir)
 
         return directory
-    
+
     def getUrl():
         f = WilhelmBaynesTranslation._getTranslationPath() + \
             os.sep + "I_Ching_Wilhelm_Translation.html"
