@@ -8,7 +8,7 @@
 #   Script for packaging to a Mac OS X application and into an install
 #   .dmg package.  The resulting package gets placed in a file such as:
 #
-#        ../dist/MacOSX/$APP_VERSION/iching-installer-mac-1.0.5.dmg
+#        ../dist/MacOSX/$APP_VERSION/iching-installer-mac-$APP_VERSION.dmg
 #
 # Dependencies:
 #   cx_Freeze
@@ -17,13 +17,14 @@
 # 
 #   ./package_for_macosx.sh
 #
-#    TODO:  clean this up so that we can use command-line options to pass the version number and build number.
-#
 ##############################################################################
 
 ##############################################################################
 # Global Variables
 ##############################################################################
+
+# Directory where this script lives, relative to the current working directory.
+DIR=`dirname $0`
 
 APP_NAME="I Ching"
 APP_NAME_NOSPACES="IChing"
@@ -33,9 +34,16 @@ APP_NAME_NOSPACES="IChing"
 APP_BUNDLE_NAME="IChing.app"
 
 APP_VERSION_PREFIX="v"
-APP_VERSION_NUMBER="1.0.5"
+
+# This obtains the application version number from the global Python
+# variable defined in main.py.
+APP_VERSION_NUMBER=`grep "__version__"  $DIR/../src/main.py | grep -v "APP_VERSION" | cut -d'"' -f 2`
+
 APP_VERSION="${APP_VERSION_PREFIX}${APP_VERSION_NUMBER}"
-APP_BUILD_NUMBER="1"
+
+# Obtains the build number, which is the subversion revision of the
+# top-level directory.
+APP_BUILD_NUMBER=`svnversion $DIR/..`
 
 # Operating system.  
 OPERATING_SYSTEM=MacOSX
@@ -56,7 +64,8 @@ APP_MAIN_ICON=resources/images/rluu/$APP_MAIN_ICONNAME
 APP_LAUNCH_SCRIPTNAME=iching.sh
 APP_LAUNCH_SCRIPT=packaging/$OPERATING_SYSTEM/$APP_LAUNCH_SCRIPTNAME
 APP_INFO_PLISTNAME=Info.plist
-APP_TEMPLATE_INFO_PLIST=packaging/$OPERATING_SYSTEM/$APP_INFO_PLISTNAME
+APP_TEMPLATE_INFO_PLISTNAME=Info.plist.in
+APP_TEMPLATE_INFO_PLIST=packaging/$OPERATING_SYSTEM/$APP_TEMPLATE_INFO_PLISTNAME
 
 APP_BUNDLE_IDENTIFIER="com.ryanluu.iching"
 APP_BUNDLE_UNIQUE_SIGNATURE="qsoo"
@@ -69,14 +78,17 @@ APP_INSTALL_PACKAGE_NAME="iching-installer-mac-$APP_VERSION.dmg"
 
 ##############################################################################
 
+echo "########################################################################"
+echo "Creating Mac OS X .dmg package for ${APP_NAME} ${APP_VERSION}"
+echo "`date`"
+echo "########################################################################"
+
 # Go to the top-level directory.
 # This script assumes that we're in the 'packaging' subdirectory of the
 # project, so this will just go to one directory above that.
-DIR=`dirname $0`
 cd $DIR/../
 
 # Destination directory to deploy to.
-echo "APP_VERSION=${APP_VERSION}"
 DEST_DIR="${DISTRIB_DIRNAME}/${OPERATING_SYSTEM}/${APP_VERSION}"
 
 # If directory exists, remove and recreate it.
@@ -111,6 +123,17 @@ mkdir -p "$APP_PACKAGE_DIR/Contents/Resources"
 echo "Copying cxfreeze files to the app bundle ..."
 cp -r $CXFREEZE_INSTALL_DIR/* $APP_PACKAGE_DIR/Contents/MacOS/
 
+# Copy I Ching text translations.
+echo "Copying text translations ..."
+TEXTS_DIR="$APP_PACKAGE_DIR/Contents/MacOS/resources/texts"
+mkdir -p "$TEXTS_DIR"
+cp -r resources/texts/aleister_crowley "$TEXTS_DIR"
+#cp -r resources/texts/alfred_huang "$TEXTS_DIR"
+cp -r resources/texts/chinese "$TEXTS_DIR"
+cp -r resources/texts/james_legge "$TEXTS_DIR"
+cp -r resources/texts/wilhelm_baynes "$TEXTS_DIR"
+cp -r resources/texts/wu_wei "$TEXTS_DIR"
+
 # Copy the launch script.
 echo "Copying launch script to the app bundle ..."
 cp $APP_LAUNCH_SCRIPT $APP_PACKAGE_DIR/Contents/MacOS/
@@ -122,7 +145,7 @@ cp $APP_MAIN_ICON $APP_PACKAGE_DIR/Contents/Resources/
 
 # Copy the template Info.plist file.
 echo "Copying template Info.plist file to the app bundle ..."
-cp $APP_TEMPLATE_INFO_PLIST $APP_PACKAGE_DIR/Contents/
+cp $APP_TEMPLATE_INFO_PLIST $APP_PACKAGE_DIR/Contents/$APP_INFO_PLISTNAME
 APP_INFO_PLIST="$APP_PACKAGE_DIR/Contents/$APP_INFO_PLISTNAME"
 
 # Do some sed replaces to put actual values in the Info.plist file.

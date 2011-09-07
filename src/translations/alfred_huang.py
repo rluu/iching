@@ -75,15 +75,39 @@ class AlfredHuangTranslation:
 
 
     def _getTranslationPath():
+
+        # Return value.
+        directory = ""
+        
         (pathname, scriptname) = os.path.split(sys.argv[0])
 
-        directory = \
-            os.path.abspath(pathname + \
-                            os.sep + ".." +
-                            os.sep + "resources" +
-                            os.sep + "texts" +
-                            os.sep + "alfred_huang")
-
+        translationDir = \
+            "resources" + \
+            os.sep + "texts" + \
+            os.sep + "alfred_huang"
+        
+        # If the script ends in .py then use the normal relative
+        # directory reference.
+        if scriptname.lower().endswith(".py"):
+            # Running it from source.
+            directory = \
+                os.path.abspath(pathname + \
+                                os.sep + ".." + \
+                                os.sep + translationDir)
+            
+        elif scriptname.lower().endswith(".exe"):
+            # Windows install.
+            directory = \
+                os.path.abspath(pathname + \
+                                os.sep + ".." + \
+                                os.sep + translationDir)
+            
+        else:
+            # Mac or Linux install.
+            directory = \
+                os.path.abspath(pathname + \
+                                os.sep + translationDir)
+        
         return directory
     
     def getUrl():
