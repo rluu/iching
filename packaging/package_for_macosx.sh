@@ -43,7 +43,7 @@ APP_VERSION="${APP_VERSION_PREFIX}${APP_VERSION_NUMBER}"
 
 # Obtains the build number, which is the subversion revision of the
 # top-level directory.
-APP_BUILD_NUMBER=`svnversion $DIR/..`
+APP_BUILD_NUMBER=`svnversion $DIR/.. | cut -d':' -f2`
 
 # Operating system.  
 OPERATING_SYSTEM=MacOSX
@@ -74,12 +74,12 @@ APP_BUNDLE_UNIQUE_SIGNATURE="qsoo"
 DMG_BACKGROUND_IMGNAME=iching_dmg_background.png
 DMG_BACKGROUND_IMG=resources/images/rluu/$DMG_BACKGROUND_IMGNAME
 
-APP_INSTALL_PACKAGE_NAME="iching-installer-mac-$APP_VERSION.dmg"
+APP_INSTALL_PACKAGE_NAME="iching-installer-mac-${APP_VERSION}-${APP_BUILD_NUMBER}.dmg"
 
 ##############################################################################
 
 echo "########################################################################"
-echo "Creating Mac OS X .dmg package for ${APP_NAME} ${APP_VERSION}"
+echo "Creating Mac OS X .dmg package for ${APP_NAME} ${APP_VERSION}-${APP_BUILD_NUMBER}"
 echo "`date`"
 echo "########################################################################"
 
@@ -89,7 +89,7 @@ echo "########################################################################"
 cd $DIR/../
 
 # Destination directory to deploy to.
-DEST_DIR="${DISTRIB_DIRNAME}/${OPERATING_SYSTEM}/${APP_VERSION}"
+DEST_DIR="${DISTRIB_DIRNAME}/${OPERATING_SYSTEM}/${APP_VERSION}-${APP_BUILD_NUMBER}"
 
 # If directory exists, remove and recreate it.
 if [ -d "$DEST_DIR" ]; then
@@ -121,18 +121,44 @@ mkdir -p "$APP_PACKAGE_DIR/Contents/Resources"
 
 # Copy the cx_Freeze output.
 echo "Copying cxfreeze files to the app bundle ..."
-cp -r $CXFREEZE_INSTALL_DIR/* $APP_PACKAGE_DIR/Contents/MacOS/
+mkdir -p "$APP_PACKAGE_DIR/Contents/MacOS/dist"
+cp -r $CXFREEZE_INSTALL_DIR/* $APP_PACKAGE_DIR/Contents/MacOS/dist
 
-# Copy I Ching text translations.
-echo "Copying text translations ..."
-TEXTS_DIR="$APP_PACKAGE_DIR/Contents/MacOS/resources/texts"
-mkdir -p "$TEXTS_DIR"
-cp -r resources/texts/aleister_crowley "$TEXTS_DIR"
-#cp -r resources/texts/alfred_huang "$TEXTS_DIR"
-cp -r resources/texts/chinese "$TEXTS_DIR"
-cp -r resources/texts/james_legge "$TEXTS_DIR"
-cp -r resources/texts/wilhelm_baynes "$TEXTS_DIR"
-cp -r resources/texts/wu_wei "$TEXTS_DIR"
+# Copy some of the directories.
+COPY_DEST_DIR="$APP_PACKAGE_DIR/Contents/MacOS"
+SUBDIRS="conf doc logs resources"
+for d in $SUBDIRS; do
+
+    echo "Copying $d ..."
+
+    # Create the subdirectory.
+    mkdir -p "$COPY_DEST_DIR/$d"
+
+    # Copy the subdirectory contents if the source directory $d is not empty.
+    if [ `find $d | wc -l` -gt 1 ]; then
+        #echo "Directory $d is not empty."
+        for f in `ls $d`; do
+            cmd="cp -r $d/$f $COPY_DEST_DIR/$d/"
+            #echo "Running command $cmd"
+            $cmd
+        done
+    fi
+
+    # Remove the ".svn" hidden directories.
+    find $COPY_DEST_DIR/$d -name "\.svn" | xargs rm -rf
+
+    # Remove any extra files that aren't needed.
+    find $COPY_DEST_DIR/$d -name "*.log" | xargs rm -rf
+    find $COPY_DEST_DIR/$d -name "*.pyc" | xargs rm -rf
+    find $COPY_DEST_DIR/$d -name "Makefile*" | xargs rm -rf
+    find $COPY_DEST_DIR/$d -name "16x16" | xargs rm -rf
+    find $COPY_DEST_DIR/$d -name "22x22" | xargs rm -rf
+    find $COPY_DEST_DIR/$d -name "scalable" | xargs rm -rf
+
+    # For now, remove pdfs, since they are big.  We may want to
+    # include them in the future.
+    find $COPY_DEST_DIR/$d -name "*.pdf" | xargs rm -rf
+done
 
 # Copy the launch script.
 echo "Copying launch script to the app bundle ..."
@@ -179,6 +205,12 @@ hdiutil create \
       -fsargs "-c c=64,a=16,e=16" \
       -format UDRW \
       "$TEMP_DMG"
+
+# Unmount any previously mounted dmg archive of the same name.
+if [ -d "/Volumes/$VOLUME_NAME" ]; then
+    echo "Unmounting already-mounted volumes with the same name."
+    umount "/Volumes/$VOLUME_NAME"*
+fi
 
 # Mount the dmg archive.
 echo "Mounting temporary archive file $TEMP_DMG ..."
@@ -241,8 +273,8 @@ echo "Doing post-cleanup..."
 echo "Removing temporary dmg file..."
 rm -f "$TEMP_DMG"
 
-echo "Removing working app package directory..."
-rm -rf "$APP_PACKAGE_DIR"
+#echo "Removing working app package directory..."
+#rm -rf "$APP_PACKAGE_DIR"
 
 echo "Removing cx_Freeze working directory..."
 rm -rf "$CXFREEZE_INSTALL_DIR"

@@ -1,5 +1,15 @@
 ##############################################################################
-# NSIS script for creating an installer exe for installing I Ching
+# File: windows_installer.nsi.in
+# 
+# Description:
+#   Input file for substitution of variables to create a NSIS script.
+#   The NSIS script is then used for creating an installer executable.
+#
+# Notes:
+#   The following substitutions are made:
+#     APP_INSTALL_PACKAGE_NAME
+#     APP_MAIN_ICON
+#     APP_NAME
 ##############################################################################
 
 # Include the header file for Modern UI 2.
@@ -9,14 +19,14 @@
 # General settings.
 
 # Name and file.
-Name "I Ching"
-OutFile "iching-installer-win32-v1.0.5.exe"
+Name "APP_NAME"
+OutFile "APP_INSTALL_PACKAGE_NAME"
 
 # Default installation directory.
-InstallDir "$LOCALAPPDATA\I Ching"
+InstallDir "$LOCALAPPDATA\APP_NAME"
 
 # Get installation directory from registry if available.
-InstallDirRegKey HKCU "Software\I Ching" ""
+InstallDirRegKey HKCU "Software\APP_NAME" ""
 
 # Request application privileges for execution.
 RequestExecutionLevel user
@@ -42,7 +52,7 @@ Var StartMenuFolder
 
 # Start menu folder page configuration.
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU"
-!define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\I Ching"
+!define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\APP_NAME"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
 
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
@@ -64,7 +74,7 @@ Var StartMenuFolder
 ##############################################################################
 # Installer Section
 
-Section "I Ching Application" SecMain
+Section "APP_NAME Application" SecMain
  
     # Set the installation directory as the destination for the 
     # following actions.
@@ -74,13 +84,11 @@ Section "I Ching Application" SecMain
     File /r /x .svn "conf"
     File /r /x .svn "dist"
     File /r /x .svn "doc"
-    File /r /x .svn /x *.pdf /x 16x16 /x 22x22 /x scalable "resources"
-
-    # Create log directory.
-    CreateDirectory "$INSTDIR\logs"
+    File /r /x .svn "logs"
+    File /r /x .svn "resources"
 
     # Store installation folder.
-    WriteRegStr HKCU "Software\I Ching" "" $INSTDIR
+    WriteRegStr HKCU "Software\APP_NAME" "" $INSTDIR
 
     # Create the uninstaller.
     WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -91,7 +99,7 @@ Section "I Ching Application" SecMain
 
         # Create a shortcut in the start menu folder for running the 
         # application.
-        CreateShortCut "$SMPROGRAMS\$StartMenuFolder\I Ching.lnk" "$INSTDIR\dist\main.exe" "" "$INSTDIR\resources\images\rluu\appIcon.ico"
+        CreateShortCut "$SMPROGRAMS\$StartMenuFolder\APP_NAME.lnk" "$INSTDIR\dist\main.exe" "" "$INSTDIR\APP_MAIN_ICON"
 
         # Create a shortcut in the start menu folder for uninstalling.
         CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
@@ -114,7 +122,7 @@ Section "Uninstall"
 
 
     # Delete the registry key.
-    DeleteRegKey /ifempty HKCU "Software\I Ching"
+    DeleteRegKey /ifempty HKCU "Software\APP_NAME"
 
 # Uninstaller section end.
 SectionEnd
