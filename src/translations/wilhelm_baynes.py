@@ -82,33 +82,15 @@ class WilhelmBaynesTranslation:
         (pathname, scriptname) = os.path.split(os.path.abspath(sys.argv[0]))
 
         translationDir = \
-            "resources" + \
+            pathname + \
+            os.sep + ".." + \
+            os.sep + "resources" + \
             os.sep + "texts" + \
             os.sep + "wilhelm_baynes" + \
             os.sep + "www2.unipr.it" + \
             os.sep + "~deyoung"
         
-        # If the script ends in .py then use the normal relative
-        # directory reference.
-        if scriptname.lower().endswith(".py"):
-            # Running it from source.
-            directory = \
-                os.path.abspath(pathname + \
-                                os.sep + ".." + \
-                                os.sep + translationDir)
-            
-        elif scriptname.lower().endswith(".exe"):
-            # Windows install.
-            directory = \
-                os.path.abspath(pathname + \
-                                os.sep + ".." + \
-                                os.sep + translationDir)
-            
-        else:
-            # Mac or Linux install.
-            directory = \
-                os.path.abspath(pathname + \
-                                os.sep + translationDir)
+        directory = os.path.abspath(translationDir)
 
         return directory
 
