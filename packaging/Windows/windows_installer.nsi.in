@@ -84,8 +84,10 @@ Section "APP_NAME Application" SecMain
     File /r /x .svn "conf"
     File /r /x .svn "dist"
     File /r /x .svn "doc"
-    File /r /x .svn "logs"
     File /r /x .svn "resources"
+
+    # Create logs directory.
+    CreateDirectory "$INSTDIR\logs"
 
     # Store installation folder.
     WriteRegStr HKCU "Software\APP_NAME" "" $INSTDIR

@@ -32,19 +32,26 @@
 # Directory where this script lives, relative to the current working directory.
 DIR=`dirname $0`
 
+# Go to the top-level directory.
+# This script assumes that it exists in the 'packaging' subdirectory of the
+# project, so this will just go to one directory above that.
+cd $DIR/../
+TOPLEVEL_DIR="`pwd`"
+
+
 APP_NAME="I Ching"
 
 APP_VERSION_PREFIX="v"
 
 # This obtains the application version number from the global Python
 # variable defined in main.py.
-APP_VERSION_NUMBER=`grep "__version__"  $DIR/../src/main.py | grep -v "APP_VERSION" | cut -d'"' -f 2`
+APP_VERSION_NUMBER=`grep "__version__"  "$TOPLEVEL_DIR/src/main.py" | grep -v "APP_VERSION" | cut -d'"' -f 2`
 
 APP_VERSION="${APP_VERSION_PREFIX}${APP_VERSION_NUMBER}"
 
 # Obtains the build number, which is the subversion revision of the
 # top-level directory.
-APP_BUILD_NUMBER=`svnversion $DIR/.. | cut -d':' -f2`
+APP_BUILD_NUMBER=`svnversion "$TOPLEVEL_DIR" | cut -d':' -f2`
 
 # Operating system.  
 OPERATING_SYSTEM=Windows
@@ -53,7 +60,10 @@ OPERATING_SYSTEM=Windows
 DISTRIB_DIRNAME=dist
 
 # cx_Freeze executable.
-CXFREEZE=cxfreeze
+CXFREEZE=/c/Python31/Scripts/cxfreeze
+
+# Python executable.
+PYTHON=/c/Python31/python.exe
 
 # 
 # Name of the Python script to pass to cx_Freeze.
@@ -67,6 +77,8 @@ NSIS_SCRIPTNAME=windows_installer.nsi
 NSIS_TEMPLATE_SCRIPTNAME=windows_installer.nsi.in
 NSIS_TEMPLATE_SCRIPT="packaging/$OPERATING_SYSTEM/$NSIS_TEMPLATE_SCRIPTNAME"
 
+MAKENSIS_SCRIPT="$TOPLEVEL_DIR/packaging/$OPERATING_SYSTEM/makensis.py"
+
 # Path to the icon to use in the application package.
 APP_MAIN_ICONNAME=appIcon.ico
 APP_MAIN_ICON="resources\\images\\rluu\\$APP_MAIN_ICONNAME"
@@ -79,11 +91,6 @@ echo "########################################################################"
 echo "Creating Windows installer for ${APP_NAME} ${APP_VERSION}-${APP_BUILD_NUMBER}"
 echo "`date`"
 echo "########################################################################"
-
-# Go to the top-level directory.
-# This script assumes that we're in the 'packaging' subdirectory of the
-# project, so this will just go to one directory above that.
-cd $DIR/../
 
 # Destination directory to deploy to.
 DEST_DIR="${DISTRIB_DIRNAME}/${OPERATING_SYSTEM}/${APP_VERSION}-${APP_BUILD_NUMBER}"
@@ -145,14 +152,12 @@ for d in $SUBDIRS; do
 done
 
 
-# Copy the icon.
-echo "Copying app icon ..."
-cp $APP_MAIN_ICON $APP_PACKAGE_DIR/Contents/Resources/
-
 # Copy the NSIS configuration script.
 echo "Copying template NSIS file ..."
-cp "$NSIS_TEMPLATE_SCRIPT" "$CXFREEZE_INSTALL_DIR/$NSIS_SCRIPTNAME"
-NSIS_SCRIPT="$CXFREEZE_INSTALL_DIR/$NSIS_SCRIPTNAME"
+cp "$NSIS_TEMPLATE_SCRIPT" "$DEST_DIR/$NSIS_SCRIPTNAME"
+
+NSIS_SCRIPT="$DEST_DIR/$NSIS_SCRIPTNAME"
+echo "NSIS_SCRIPT is: $NSIS_SCRIPT"
 
 # Do some sed replaces to put actual values in the NSIS script file.
 echo "Doing sed replaces to the $NSIS_SCRIPT file ..."
@@ -162,30 +167,43 @@ sed -i -e "s/APP_INSTALL_PACKAGE_NAME/${APP_INSTALL_PACKAGE_NAME}/g" $NSIS_SCRIP
 
 # Remove temporary file created by the above sed commands.
 for f in `ls ${NSIS_SCRIPT}*`; do
-    if [ "$f" != "${APP_INFO_PLIST}" ]; then
-        echo "Removing temp generated sed file ..."
+    if [ "$f" != "${NSIS_SCRIPT}" ]; then
+        echo "Removing temp generated sed file '$f' ..."
         rm $f
     fi
 done
 
 # Run NSIS on the configuration script.
-pushd .
-cd "$CXFREEZE_INSTALL_DIR"
+echo "Running NSIS to generate a Windows installer ..."
+
+echo "NSIS_SCRIPT is: $NSIS_SCRIPT"
+cmd="$PYTHON $MAKENSIS_SCRIPT --file=$NSIS_SCRIPT"
+echo "Running cmd: $cmd"
+$cmd
+#$PYTHON "$MAKENSIS_SCRIPT" --file="$NSIS_SCRIPT"
+
+if [ "$?" != "0" ]; then
+    echo "Error: makensis failed with error code $?"
+    return 1
+else
+    echo "makensis script finished successfully."
+fi
 
 
 # Do some cleanup
-echo "Doing post-cleanup..."
+#echo "Doing post-cleanup..."
 
-echo "Removing working app package directory..."
-rm -rf "$APP_PACKAGE_DIR"
+#echo "Removing working directories ..."
+#for f in `find $DEST_DIR -type d`; do
+#    rm -rf $f
+#done
 
-echo "Removing cx_Freeze working directory..."
-rm -rf "$CXFREEZE_INSTALL_DIR"
+#echo "Clean-up complete."
 
-echo "Clean-up complete."
 echo ""
-echo "Installer archive is now created at location: "
-echo "`pwd`/$APP_INSTALL_PACKAGE"
+echo "Installer archive should now exist at this location: "
+echo "$TOPLEVEL_DIR/$DEST_DIR/$APP_INSTALL_PACKAGE_NAME"
 
 #echo "Done."
-exit 0 
+exit 0
+

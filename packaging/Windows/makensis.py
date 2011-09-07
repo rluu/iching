@@ -111,8 +111,9 @@ def main():
     rv = 0
 
     if options.inputFile != "":
+        print("File specified is: " + options.inputFile)
         if not os.path.isfile(options.inputFile):
-            print("Error: File specified is invalid.")
+            print("Error: File specified is not a file.")
             sys.exit(1)
         else:
             makeNsisExeStr = "makensis.exe"

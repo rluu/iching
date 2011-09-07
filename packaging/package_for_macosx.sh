@@ -26,6 +26,12 @@
 # Directory where this script lives, relative to the current working directory.
 DIR=`dirname $0`
 
+# Go to the top-level directory.
+# This script assumes that it exists in the 'packaging' subdirectory of the
+# project, so this will just go to one directory above that.
+cd $DIR/../
+TOPLEVEL_DIR="`pwd`"
+
 APP_NAME="I Ching"
 APP_NAME_NOSPACES="IChing"
 
@@ -37,13 +43,13 @@ APP_VERSION_PREFIX="v"
 
 # This obtains the application version number from the global Python
 # variable defined in main.py.
-APP_VERSION_NUMBER=`grep "__version__"  $DIR/../src/main.py | grep -v "APP_VERSION" | cut -d'"' -f 2`
+APP_VERSION_NUMBER=`grep "__version__"  "$TOPLEVEL_DIR/src/main.py" | grep -v "APP_VERSION" | cut -d'"' -f 2`
 
 APP_VERSION="${APP_VERSION_PREFIX}${APP_VERSION_NUMBER}"
 
 # Obtains the build number, which is the subversion revision of the
 # top-level directory.
-APP_BUILD_NUMBER=`svnversion $DIR/.. | cut -d':' -f2`
+APP_BUILD_NUMBER=`svnversion "$TOPLEVEL_DIR" | cut -d':' -f2`
 
 # Operating system.  
 OPERATING_SYSTEM=MacOSX
@@ -82,11 +88,6 @@ echo "########################################################################"
 echo "Creating Mac OS X .dmg package for ${APP_NAME} ${APP_VERSION}-${APP_BUILD_NUMBER}"
 echo "`date`"
 echo "########################################################################"
-
-# Go to the top-level directory.
-# This script assumes that we're in the 'packaging' subdirectory of the
-# project, so this will just go to one directory above that.
-cd $DIR/../
 
 # Destination directory to deploy to.
 DEST_DIR="${DISTRIB_DIRNAME}/${OPERATING_SYSTEM}/${APP_VERSION}-${APP_BUILD_NUMBER}"
@@ -282,7 +283,7 @@ rm -rf "$CXFREEZE_INSTALL_DIR"
 echo "Clean-up complete."
 echo ""
 echo "Installer archive is now created at location: "
-echo "`pwd`/$APP_INSTALL_PACKAGE"
+echo "$TOPLEVEL_DIR/$APP_INSTALL_PACKAGE"
 
 #echo "Done."
 exit 0 

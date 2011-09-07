@@ -22,10 +22,21 @@ Dependencies to build/run this project are:
   - SIP 4.11
   - PyQt 4.7.5
 
-Dependencies to generate an installer .exe file on MS Windows operating system:
+Dependencies to generate a .exe executable installer for MS Windows 
+operating system:
 
+  - MinGW
+  - MSYS
   - cx_Freeze
   - NSIS
+  - Subversion client
+
+Dependencies to generate a .dmg install image for the Mac OS X 
+operating system:
+
+  - cx_Freeze
+  - Subversion client
+
 
 ##############################################################################
 
@@ -86,23 +97,15 @@ operating systems:
 
     svn checkout http://iching.googlecode.com/svn/trunk/ iching-read-only
 
-5) Run cx_Freeze on main.py to generate the runnable .exe in the dist folder:
+5) Change directory to the packaging folder and run the packaging script.
 
-    [user@localhost ~]$ cd iching-read-only
-    [user@localhost iching-read-only] /c/Python31/Scripts/cxfreeze src/main.py
+    [user@localhost ~]$ cd iching-read-only/packaging/
+    [user@localhost packaging] ./package_for_windows
 
-6) Copy the Microsoft runtime libraries to the dist folder.
+9) At the end of the above script output, the exact path to the created
+installer executable is printed to the screen.  The path should be somewhere
+within the 'dist' directory.
 
-    [user@localhost iching-read-only] cp -r tps/microsoft/Microsoft.VC90.CRT/ dist/
-
-7) Copy the NSIS script file from the conf directory to the top-level.
-
-    [user@localhost iching-read-only]$ cp conf/windows_installer.nsi .
-
-8) Run the NSIS.exe application and load the script 'windows_installer.nsi'.
-
-9) The resulting installer executable will be generated and located in
-   the top-level directory.
 
 ##############################################################################
 
@@ -111,7 +114,7 @@ Steps to generate an installable .dmg on Mac OS X operating system:
 1) Follow steps 1 through 4 above to install dependencies.
 
 2) Install cx_Freeze, which is used to convert the Python application
-   to an .exe executable.
+   to an binary executable.
 
     http://cx-freeze.sourceforge.net/
 
@@ -187,10 +190,9 @@ Directory contents:
 
 iching
   |
-  |- conf: Holds the logging configuration and the NSIS installer 
-  |        generator source file. 
+  |- conf: Holds various configuration files such as the logging config.
   |
-  |- dist: Holds packaged distributable install files.
+  |- dist: Holds the generated distributable package install files.
   |
   |- doc:  Holds this documentation.
   |
@@ -199,7 +201,7 @@ iching
   |        distributable install files.
   | 
   |- resources: 
-  |        Holds the I Ching texts, and icons.
+  |        Holds the I Ching texts, and image files.
   |
   |- src:  Holds the Python source code.
   |
