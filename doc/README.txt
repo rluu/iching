@@ -121,10 +121,9 @@ Steps to generate an installable .dmg on Mac OS X operating system:
 
     svn checkout http://iching.googlecode.com/svn/trunk/ iching-read-only
 
-4) Run cx_Freeze on main.py to get the library dependencies in the dist folder:
+4) Change directory to the top-level project directory.
 
     [user@localhost ~]$ cd iching-read-only
-    [user@localhost iching-read-only] cxfreeze src/main.py
 
 4a) Version 4.2.3 of cx_Freeze source code has a bug, so if you are
 using this version and get the following error, read this step fully,
@@ -167,33 +166,22 @@ sh-3.2# diff freezer.py freezer.py_orig
 Bug filed is:
 http://sourceforge.net/tracker/?func=detail&aid=3404531&group_id=84937&atid=574390
 
-5) Rename the 'dist' folder to 'IChing'.
+5) Change directory into the packaging directory and modify the
+packaging script for Mac OS X, to have the correct version number and
+release information.
 
-    [user@localhost iching-read-only] mv dist IChing
+    [user@localhost iching-read-only]$ cd packaging
+    [user@localhost packaging]$ vim package_for_macosx.sh
 
-5) Create a .dmg file of the dist directory.  This is done by the
-following sub-steps:
+6) Run the packaging script.  This will generate a .dmg archive for installing.
 
-  a) Open Disk Utility (Applications > Utilities > Disk Utility).
-  b) Go to the menu option "File" -> "New" -> "Disk Image from Folder".
-  c) Browse to the iching top-level directory and select the 
-     'IChing' folder (that used to be the 'dist' folder).
-  d) Give the dmg an appropriate name like
-     iching-mac-v1.0.5-custom.dmg and in the dropdown combo box by
-     'Image Format:', select option 'compressed'.  Encryption option
-     should be set to 'none'.
-  e) Click the 'Save' button.
+    [user@localhost packaging]$ ./package_for_macosx.sh
 
-6) 
+6) Change directory to the 'dist/MacOSX' directory to get the archive.
 
-TODO:  To be continued...
-- Make a Contents directory.
-- Put file Info.plist (.app descriptor file) in it.
-- Make a Contents/MacOS directory with all the executable files.
-- Put file iching.sh (launcher script) in Contents/MacOS
-- Make a Contents/Resources directory with icon file appIcon.icns in it.
-
-http://chromasoft.blogspot.com/2010/02/building-dmg-installer-for-mac-simple.html
+    [user@localhost packaging]$ cd ../dist/MacOSX/v*
+    [user@localhost v1.0.5]$ ls
+    iching-installer-mac-v1.0.5.dmg
 
 ##############################################################################
 
