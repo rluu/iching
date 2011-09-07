@@ -122,7 +122,7 @@ for d in $SUBDIRS; do
     if [ `find $d | wc -l` -gt 1 ]; then
         #echo "Directory $d is not empty."
         for f in `ls $d`; do
-            cmd="cp -r $d/$f $COPY_DEST_DIR/$d/"
+            cmd="cp -r $d/$f $DEST_DIR/$d/"
             #echo "Running command $cmd"
             $cmd
         done
@@ -167,7 +167,12 @@ for f in `ls ${NSIS_SCRIPT}*`; do
         rm $f
     fi
 done
- 
+
+# Run NSIS on the configuration script.
+pushd .
+cd "$CXFREEZE_INSTALL_DIR"
+
+
 # Do some cleanup
 echo "Doing post-cleanup..."
 
