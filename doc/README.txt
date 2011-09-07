@@ -184,7 +184,14 @@ following sub-steps:
      should be set to 'none'.
   e) Click the 'Save' button.
 
-6) TODO:  To be continued...
+6) 
+
+TODO:  To be continued...
+- Make a Contents directory.
+- Put file Info.plist (.app descriptor file) in it.
+- Make a Contents/MacOS directory with all the executable files.
+- Put file iching.sh (launcher script) in Contents/MacOS
+- Make a Contents/Resources directory with icon file appIcon.icns in it.
 
 http://chromasoft.blogspot.com/2010/02/building-dmg-installer-for-mac-simple.html
 
@@ -197,9 +204,16 @@ iching
   |- conf: Holds the logging configuration and the NSIS installer 
   |        generator source file. 
   |
+  |- dist: Holds packaged distributable install files.
+  |
   |- doc:  Holds this documentation.
   |
-  |- resources: Holds the I Ching texts, and icons.
+  |- packaging: 
+  |        Holds scripts and configuration files for packaging to 
+  |        distributable install files.
+  | 
+  |- resources: 
+  |        Holds the I Ching texts, and icons.
   |
   |- src:  Holds the Python source code.
   |
