@@ -357,17 +357,15 @@ class MainWindow(QMainWindow):
 
         # Wilhelm/Baynes Translation.
         self.webViewWilhelmBaynesTranslation = WebView(self)
-        self.webViewWilhelmBaynesTranslation.hide()
         self.webViewWilhelmBaynesTranslation.\
             load(WilhelmBaynesTranslation.getUrl())
         self.webViewWilhelmBaynesTranslation.\
             setWindowTitle("Wilhelm/Baynes Translation")
-        #self.webViewWilhelmBaynesTranslation.show()
-        #self.webViewWilhelmBaynesTranslation.hide()
+        self.webViewWilhelmBaynesTranslation.show()
+        self.webViewWilhelmBaynesTranslation.hide()
 
         # Wu Wei Translation.
         #self.webViewWuWeiTranslation = WebView(self)
-        #self.webViewWuWeiTranslation.hide()
         #self.webViewWuWeiTranslation.\
         #    load(WuWeiTranslation.getUrl())
         #self.webViewWuWeiTranslation.\
@@ -377,13 +375,12 @@ class MainWindow(QMainWindow):
 
         # James Legge Translation.
         self.webViewJamesLeggeTranslation = WebView(self)
-        self.webViewJamesLeggeTranslation.hide()
         self.webViewJamesLeggeTranslation.\
             load(JamesLeggeTranslation.getUrl())
         self.webViewJamesLeggeTranslation.\
             setWindowTitle("James Legge Translation")
-        #self.webViewJamesLeggeTranslation.show()
-        #self.webViewJamesLeggeTranslation.hide()
+        self.webViewJamesLeggeTranslation.show()
+        self.webViewJamesLeggeTranslation.hide()
 
         
         # Create actions.
