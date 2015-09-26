@@ -35,6 +35,5 @@ Please see the branch 'gh-pages' for the source code of the website.
 mkdir -p iching/gh-pages
 cd iching/gh-pages/
 
-git clone https://github.com/rluu/iching.git .
-git checkout -b gh-pages
+git clone -b gh-pages https://github.com/rluu/iching.git .
 ```
