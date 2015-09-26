@@ -5,20 +5,15 @@ iching
 
 I Ching application written in PyQt.
 
-Github page: https://github.com/rluu/iching/
+Project GitHub page: https://github.com/rluu/iching/
 
 #### Author
 
 Ryan Luu (ryanluu@gmail.com)
 
+#### Project Documentation
 
-
-#### Webpage
-
-Webpage for the project is hosted on GitHub pages.
-
-- Website URL:         http://rluu.github.io/iching/
-- Website source code: https://github.com/rluu/iching/tree/gh-pages
+Please see the `doc/README.txt` file for more information about the projct and how to build and run it.
 
 #### Source code
 
@@ -27,6 +22,16 @@ Source code for the actual project was previously hosted on Google Code, and has
 ```
 git clone https://github.com/rluu/iching.git
 ```
+
+#### Webpage
+
+Webpage for the project is hosted on GitHub pages.
+
+- Website URL:         http://rluu.github.io/iching/
+- Website source code: https://github.com/rluu/iching/tree/gh-pages
+
+
+#### Source code - Old code repository
 
 - Project page on Google Code (currently read-only now): https://code.google.com/p/iching/
 - Subversion code checkout:
