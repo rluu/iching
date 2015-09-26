@@ -5,11 +5,14 @@ iching
 
 I Ching application written in PyQt.
 
+
+Project Website: http://rluu.github.io/iching/
+
 Project GitHub page: https://github.com/rluu/iching/
 
 #### Author
 
-Ryan Luu (ryanluu@gmail.com)
+Project Author: Ryan Luu (ryanluu@gmail.com)
 
 #### Project Documentation
 
