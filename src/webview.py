@@ -1,13 +1,14 @@
 
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 # QtNetwork modules required for QtWebKit with cx_Freeze.
-from PyQt4.QtNetwork import *
+from PyQt5.QtNetwork import *
 
-from PyQt4.QtWebKit import QWebPage
-from PyQt4.QtWebKit import QWebView
+from PyQt5.QtWebKitWidgets import QWebPage
+from PyQt5.QtWebKitWidgets import QWebView
 
 
 

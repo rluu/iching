@@ -17,10 +17,9 @@ Requirements:
 
 Dependencies to build/run this project are:
 
-  - Python 3.1
-  - Qt 4.6.3
-  - SIP 4.11
-  - PyQt 4.7.5
+  - Python 3.4
+  - Qt5
+  - PyQt5  (PyQt has a dependency on SIP)
 
 Dependencies to generate a .exe executable installer for MS Windows 
 operating system:
@@ -29,49 +28,44 @@ operating system:
   - MSYS
   - cx_Freeze
   - NSIS
-  - Subversion client
+  - Git client
 
 Dependencies to generate a .dmg install image for the Mac OS X 
 operating system:
 
   - cx_Freeze
-  - Subversion client
+  - Git client
 
 
 ##############################################################################
 
 Steps to compile/run the software:
 
-1) Install Python 3.1
+1) Install Python 3.4
 
-    http://www.python.org/download/releases/3.1/
+    http://www.python.org/download/releases/3.4/
 
-2) Install Qt 4.6.3
+2) Install Qt 5
 
     ftp://ftp.trolltech.com/qt/source/
 
-3) Install SIP 4.11
+3) Install SIP and PyQt 5
 
-    Included in the svn source checkout.
+    Included in the source code.
     
-    ./tps/pyqt/sip-4.11.tar.gz
+    ./tps/pyqt/sip-4.16.9.tar.gz
+    ./tps/pyqt/sip-4.16.9.zip
     
-4) Install PyQt 4.7.5
+    ./tps/pyqt/PyQt-gpl-5.5.tar.gz
+    ./tps/pyqt/PyQt-gpl-5.5.zip
 
-    Included in the svn source checkout.  Use the appropriate version
-    for your operating system.
+5) Get the I Ching project source code:
 
-    ./tps/pyqt/PyQt-mac-gpl-4.7.5.tar.gz
-    ./tps/pyqt/PyQt-win-gpl-4.7.5.zip
-    ./tps/pyqt/PyQt-x11-gpl-4.7.5.tar.gz
-
-5) Check out I Ching project source code:
-
-    svn checkout http://iching.googlecode.com/svn/trunk/ iching-read-only
+    git clone https://github.com/rluu/iching.git
 
 6) Change directory to the src directory.
 
-    [user@localhost ~]$ cd iching-read-only/src/
+    [user@localhost ~]$ cd iching/
 
 7) Run the executable using Python.
 
@@ -93,13 +87,13 @@ operating systems:
 
     http://nsis.sourceforge.net/Download
 
-4) Check out project source code:
+4) Get the project source code:
 
-    svn checkout http://iching.googlecode.com/svn/trunk/ iching-read-only
+    git clone https://github.com/rluu/iching.git
 
 5) Change directory to the packaging folder and run the packaging script.
 
-    [user@localhost ~]$ cd iching-read-only/packaging/
+    [user@localhost ~]$ cd iching/packaging/
     [user@localhost packaging] ./package_for_windows
 
 9) At the end of the above script output, the exact path to the created
@@ -118,13 +112,13 @@ Steps to generate an installable .dmg on Mac OS X operating system:
 
     http://cx-freeze.sourceforge.net/
 
-3) Check out project source code:
+3) Get the project source code:
 
-    svn checkout http://iching.googlecode.com/svn/trunk/ iching-read-only
+    git clone https://github.com/rluu/iching.git
 
 4) Change directory to the top-level project directory.
 
-    [user@localhost ~]$ cd iching-read-only
+    [user@localhost ~]$ cd iching
 
 4a) Version 4.2.3 of cx_Freeze source code has a bug, so if you are
 using this version and get the following error, read this step fully,
@@ -133,30 +127,30 @@ otherwise go to the next step.
 Error in output is:
 
 ...
-copying QtCore.framework/Versions/4/QtCore -> /Users/asdf/programming/qwer/dist/QtCore
+copying QtCore.framework/Versions/5/QtCore -> /Users/asdf/programming/iching/dist/QtCore
 Traceback (most recent call last):
-File "/Library/Frameworks/Python.framework/Versions/3.1/bin/cxfreeze", line 5, in <module>
+File "/Library/Frameworks/Python.framework/Versions/3.4/bin/cxfreeze", line 5, in <module>
 main()
-File "/Library/Frameworks/Python.framework/Versions/3.1/lib/python3.1/site-packages/cx_Freeze/main.py", line 188, in main
+File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/cx_Freeze/main.py", line 188, in main
 freezer.Freeze()
-File "/Library/Frameworks/Python.framework/Versions/3.1/lib/python3.1/site-packages/cx_Freeze/freezer.py", line 470, in Freeze
+File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/cx_Freeze/freezer.py", line 470, in Freeze
 self._FreezeExecutable(executable)
-File "/Library/Frameworks/Python.framework/Versions/3.1/lib/python3.1/site-packages/cx_Freeze/freezer.py", line 171, in _FreezeExecutable
+File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/cx_Freeze/freezer.py", line 171, in _FreezeExecutable
 exe.copyDependentFiles, scriptModule)
-File "/Library/Frameworks/Python.framework/Versions/3.1/lib/python3.1/site-packages/cx_Freeze/freezer.py", line 455, in _WriteModules
+File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/cx_Freeze/freezer.py", line 455, in _WriteModules
 self._CopyFile(module.file, target, copyDependentFiles)
-File "/Library/Frameworks/Python.framework/Versions/3.1/lib/python3.1/site-packages/cx_Freeze/freezer.py", line 128, in _CopyFile
+File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/cx_Freeze/freezer.py", line 128, in _CopyFile
 self._CopyFile(source, target, copyDependentFiles)
-File "/Library/Frameworks/Python.framework/Versions/3.1/lib/python3.1/site-packages/cx_Freeze/freezer.py", line 120, in _CopyFile
+File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/cx_Freeze/freezer.py", line 120, in _CopyFile
 shutil.copyfile(source, target)
-File "/Library/Frameworks/Python.framework/Versions/3.1/lib/python3.1/shutil.py", line 66, in copyfile
+File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/shutil.py", line 66, in copyfile
 fsrc = open(src, 'rb')
-IOError: [Errno 2] No such file or directory: 'QtCore.framework/Versions/4/QtCore'
+IOError: [Errno 2] No such file or directory: 'QtCore.framework/Versions/5/QtCore'
 
 
 This error is due to cxfreeze assuming otool is returning an absolute
 path in freezer.py, which is a false assumption.  This bug can be
-fixed by modifying /Library/Frameworks/Python.framework/Versions/3.1/lib/python3.1/site-packages/cx_Freeze/freezer.py.  The modification is below.
+fixed by modifying /Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/cx_Freeze/freezer.py.  The modification is below.
 
 sh-3.2# diff freezer.py freezer.py_orig 
 252,253d251
@@ -171,7 +165,7 @@ http://sourceforge.net/tracker/?func=detail&aid=3404531&group_id=84937&atid=5743
 packaging script for Mac OS X, to have the correct version number and
 release information.
 
-    [user@localhost iching-read-only]$ cd packaging
+    [user@localhost iching]$ cd packaging
     [user@localhost packaging]$ vim package_for_macosx.sh
 
 6) Run the packaging script.  This will generate a .dmg archive for installing.
