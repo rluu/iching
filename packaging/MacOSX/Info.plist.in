@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+
+    <key>CFBundleExecutable</key>
+    <string>APP_LAUNCH_SCRIPTNAME</string>
+
+    <key>CFBundleGetInfoString</key>
+    <string>APP_NAME</string>
+
+    <key>CFBundleIconFile</key>
+    <string>APP_MAIN_ICONNAME</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>APP_BUNDLE_IDENTIFIER</string>
+
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+
+    <!-- CFBundleName:
+         Name of the app.  This will be shown in the dock and menu bar. -->
+    <key>CFBundleName</key>
+    <string>APP_NAME</string>
+
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <!-- CFBundleShortVersionString:
+         This is a short display string for the application version. -->
+    <key>CFBundleShortVersionString</key>
+    <string>APP_VERSION_NUMBER</string>
+
+    <key>CFBundleSignature</key>
+    <string>APP_BUNDLE_UNIQUE_SIGNATURE</string>
+
+    <!-- CFBundleVersion:
+         This is the build number for this application. -->
+    <key>CFBundleVersion</key>
+    <string>APP_BUILD_NUMBER</string>
+
+    <key>NSAppleScriptEnabled</key>
+    <string>NO</string>
+</dict>
+</plist>
