@@ -15,7 +15,7 @@ Ryan Luu (ryanluu@gmail.com)
 
 Webpage for the project is hosted on GitHub pages.
 
-- Website URL:         http://rluu.github.io/iching/
+- Website URL:         https://rluu.github.io/iching/
 - Website source code: https://github.com/rluu/iching/tree/gh-pages
 
 #### Source code
